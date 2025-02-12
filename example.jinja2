@@ -1,0 +1,24 @@
+{# test #}
+{% set last_day = (date.today() + timedelta(days=32)).replace(day=1) - timedelta(days=1) %}
+{% set weekdays = [calendar.SUNDAY, calendar.SATURDAY] %}
+
+{% for i in range(1, 31) %}
+    {% set current_day = last_day - timedelta(days=i) %}
+    {% if current_day.weekday() not in weekdays %}
+        {{ current_day | date("%Y-%m-%d") }}
+        {% break %}
+    {% endif %}
+{% endfor %}
+{% if 1 %}
+{% endif %}
+
+{% macro test() %}
+{% endmacro %}
+
+
+
+{{ test(1) }}
+
+
+{% call(stuff) test(1, 2, 3) %}
+{% endcall %}

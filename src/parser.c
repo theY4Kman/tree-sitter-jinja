@@ -14,7 +14,7 @@
 #pragma GCC optimize ("O0")
 #endif
 
-#define LANGUAGE_VERSION 15
+#define LANGUAGE_VERSION 14
 #define STATE_COUNT 1460
 #define LARGE_STATE_COUNT 2
 #define SYMBOL_COUNT 170
@@ -25,7 +25,7 @@
 #define MAX_ALIAS_SEQUENCE_LENGTH 15
 #define MAX_RESERVED_WORD_SET_SIZE 0
 #define PRODUCTION_ID_COUNT 113
-#define SUPERTYPE_COUNT 4
+#define SUPERTYPE_COUNT 0
 
 enum ts_symbol_identifiers {
   anon_sym_set = 1,
@@ -3593,63 +3593,6 @@ static const TSStateId ts_primary_state_ids[STATE_COUNT] = {
   [1459] = 1135,
 };
 
-static const TSSymbol ts_supertype_symbols[SUPERTYPE_COUNT] = {
-  sym_expression,
-  sym_parameter,
-  sym_pattern,
-  sym_primary_expression,
-};
-
-static const TSMapSlice ts_supertype_map_slices[] = {
-  [sym_expression] = {.index = 0, .length = 5},
-  [sym_parameter] = {.index = 5, .length = 2},
-  [sym_pattern] = {.index = 7, .length = 6},
-  [sym_primary_expression] = {.index = 13, .length = 23},
-};
-
-static const TSSymbol ts_supertype_map_entries[] = {
-  [0] =
-    sym_boolean_operator,
-    sym_comparison_operator,
-    sym_conditional_expression,
-    sym_not_operator,
-    sym_primary_expression,
-  [5] =
-    sym_default_parameter,
-    sym_identifier,
-  [7] =
-    sym_attribute,
-    sym_identifier,
-    sym_list_pattern,
-    sym_list_splat_pattern,
-    sym_subscript,
-    sym_tuple_pattern,
-  [13] =
-    sym_attribute,
-    sym_binary_operator,
-    sym_call,
-    sym_concatenated_string,
-    sym_dictionary,
-    sym_dictionary_comprehension,
-    sym_false,
-    sym_filter_expr,
-    sym_float,
-    sym_generator_expression,
-    sym_identifier,
-    sym_integer,
-    sym_list,
-    sym_list_comprehension,
-    sym_none,
-    sym_parenthesized_expression,
-    sym_set,
-    sym_set_comprehension,
-    sym_string,
-    sym_subscript,
-    sym_true,
-    sym_tuple,
-    sym_unary_operator,
-};
-
 const TSCharacterRange sym_escape_sequence_character_set_1[] = {
   {'\n', '\n'}, {'\r', '\r'}, {'"', '"'}, {'\'', '\''}, {'0', '9'}, {'N', 'N'}, {'U', 'U'}, {'\\', '\\'},
   {'a', 'b'}, {'f', 'f'}, {'n', 'n'}, {'r', 'r'}, {'t', 'v'}, {'x', 'x'},
@@ -6595,7 +6538,7 @@ static bool ts_lex(TSLexer *lexer, TSStateId state) {
   }
 }
 
-static const TSLexerMode ts_lex_modes[STATE_COUNT] = {
+static const TSLexMode ts_lex_modes[STATE_COUNT] = {
   [0] = {.lex_state = 0, .external_lex_state = 1},
   [1] = {.lex_state = 157, .external_lex_state = 2},
   [2] = {.lex_state = 8},
@@ -42138,7 +42081,6 @@ TS_PUBLIC const TSLanguage *tree_sitter_jinja(void) {
     .state_count = STATE_COUNT,
     .large_state_count = LARGE_STATE_COUNT,
     .production_id_count = PRODUCTION_ID_COUNT,
-    .supertype_count = SUPERTYPE_COUNT,
     .field_count = FIELD_COUNT,
     .max_alias_sequence_length = MAX_ALIAS_SEQUENCE_LENGTH,
     .parse_table = &ts_parse_table[0][0],
@@ -42149,9 +42091,6 @@ TS_PUBLIC const TSLanguage *tree_sitter_jinja(void) {
     .field_names = ts_field_names,
     .field_map_slices = ts_field_map_slices,
     .field_map_entries = ts_field_map_entries,
-    .supertype_map_slices = ts_supertype_map_slices,
-    .supertype_map_entries = ts_supertype_map_entries,
-    .supertype_symbols = ts_supertype_symbols,
     .symbol_metadata = ts_symbol_metadata,
     .public_symbol_map = ts_symbol_map,
     .alias_map = ts_non_terminal_alias_map,
@@ -42168,13 +42107,6 @@ TS_PUBLIC const TSLanguage *tree_sitter_jinja(void) {
       tree_sitter_jinja_external_scanner_deserialize,
     },
     .primary_state_ids = ts_primary_state_ids,
-    .name = "jinja",
-    .max_reserved_word_set_size = 0,
-    .metadata = {
-      .major_version = 0,
-      .minor_version = 1,
-      .patch_version = 3,
-    },
   };
   return &language;
 }

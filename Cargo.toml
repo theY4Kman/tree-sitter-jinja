@@ -1,7 +1,7 @@
 [package]
 name = "tree-sitter-jinja"
 description = "Jinja2 grammar for the tree-sitter parsing library"
-version = "0.1.3"
+version = "0.1.4"
 authors = ["Zach Kanzler <they4kman@gmail.com>"]
 license = "MIT"
 readme = "README.md"

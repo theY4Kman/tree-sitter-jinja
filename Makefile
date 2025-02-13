@@ -4,7 +4,7 @@ endif
 
 LANGUAGE_NAME := tree-sitter-jinja
 HOMEPAGE_URL := https://github.com/they4kman/tree-sitter-jinja
-VERSION := 0.1.4
+VERSION := 0.1.5
 
 # repository
 SRC_DIR := src

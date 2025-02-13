@@ -4,12 +4,6 @@ on:
   push:
     tags: ["*"]
 
-env:
-  # XXX(zk): tree-sitter 0.25 was only recently released, bringing ABI 15
-  #          with it. However, py-tree-sitter still only supports up to 14,
-  #          and the Python bindings are my main concern here.
-  TREE_SITTER_ABI_VERSION: "14"
-
 permissions:
   contents: write
   id-token: write
@@ -22,10 +16,12 @@ jobs:
       generate: true
       attestations: true
   pypi:
-    uses: tree-sitter/workflows/.github/workflows/package-pypi.yml@main
+    uses: ./.github/workflows/package-pypi.yml
     with:
       generate: true
-    env:
-      TREE_SITTER_ABI_VERSION: ${{ env.TREE_SITTER_ABI_VERSION }}
+      # XXX(zk): tree-sitter 0.25 was only recently released, bringing ABI 15
+      #          with it. However, py-tree-sitter still only supports up to 14,
+      #          and the Python bindings are my main concern here.
+      abi-version: '14'
     secrets:
       PYPI_API_TOKEN: ${{secrets.PYPI_API_TOKEN}}

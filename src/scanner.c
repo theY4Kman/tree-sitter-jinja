@@ -89,7 +89,7 @@ bool tree_sitter_jinja_external_scanner_scan(void *payload, TSLexer *lexer, cons
 			}
 
 			advance(lexer);
-			if (lexer->lookahead == '-') {
+			if (lexer->lookahead == '-' || lexer->lookahead == '+') {
 				advance(lexer);
 			}
 
@@ -100,7 +100,7 @@ bool tree_sitter_jinja_external_scanner_scan(void *payload, TSLexer *lexer, cons
 	}
 
 	if (in_tag || in_variable || in_comment) {
-		if (lexer->lookahead == '-') {
+		if (lexer->lookahead == '-' || lexer->lookahead == '+') {
 			advance(lexer);
 		}
 

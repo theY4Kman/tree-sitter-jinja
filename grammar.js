@@ -66,6 +66,9 @@ module.exports = grammar({
     $.variable_end,
     $.comment_begin,
     $.comment_end,
+    $._string_delimiter,
+    $.string_data,
+    $.escape_sequence,
     $.template_data,
   ],
 
@@ -598,26 +601,18 @@ module.exports = grammar({
       $.string,
     ),
 
-    string: $ => choice(...['"', "'"].map(delimiter => seq(
-      delimiter,
-      repeat(choice(
-        token.immediate(prec(1, new RegExp(`[^${delimiter}\\\\]+`))),
-        $.escape_sequence,
-      )),
-      delimiter,
-    ))),
-    escape_sequence: $ => token.immediate(prec(1, seq(
-      '\\',
-      choice(
-        /u[a-fA-F\d]{4}/,
-        /U[a-fA-F\d]{8}/,
-        /x[a-fA-F\d]{2}/,
-        /\d{3}/,
-        /\r?\n/,
-        /['"abfrntv\\]/,
-        /N\{[^}]+}/,
-      )
-    ))),
+    string: $ => seq(
+      $._string_delimiter,
+      field('content', repeat(choice($.string_data, $.escape_sequence))),
+      $._string_delimiter,
+    ),
+    string_data: $ => token.immediate(prec(1, /[^'"]+/)),
+    escape_sequence: $ => token.immediate(prec(1, /\\(u[a-fA-F\d]{4}|U[a-fA-F\d]{8}|\d{3}|['"abfrntv\\]|N\{[^}]+})/)),
+
+    concatenated_string: $ => seq(
+      $.string,
+      repeat1($.string)
+    ),
 
     conditional_expression: $ => prec.right(PREC.conditional, seq(
       $.expression,
@@ -626,11 +621,6 @@ module.exports = grammar({
       'else',
       $.expression
     )),
-
-    concatenated_string: $ => seq(
-      $.string,
-      repeat1($.string)
-    ),
 
     integer: $ => token(choice(
       seq(
@@ -691,6 +681,8 @@ module.exports = grammar({
     variable_end: $ => /-?}}/,
     comment_begin: $ => /\{#-?/,
     comment_end: $ => /-?#}/,
+
+    _string_delimiter: $ => /'''|"""|'|"/,
   },
 });
 

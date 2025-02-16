@@ -1,0 +1,213 @@
+================================================================================
+Static string, single-quoted
+================================================================================
+{{ 'static' }}
+--------------------------------------------------------------------------------
+
+(source_file
+  (jinja_variable
+    (variable_begin)
+    (string
+      (string_data))
+    (variable_end)))
+
+================================================================================
+Static string, double-quoted
+================================================================================
+{{ "static" }}
+--------------------------------------------------------------------------------
+
+(source_file
+  (jinja_variable
+    (variable_begin)
+    (string
+      (string_data))
+    (variable_end)))
+
+================================================================================
+Static string, triple-single-quoted
+================================================================================
+{{ '''static''' }}
+--------------------------------------------------------------------------------
+
+(source_file
+  (jinja_variable
+    (variable_begin)
+    (string
+      (string_data))
+    (variable_end)))
+
+================================================================================
+Static string, triple-double-quoted
+================================================================================
+{{ """static""" }}
+--------------------------------------------------------------------------------
+
+(source_file
+  (jinja_variable
+    (variable_begin)
+    (string
+      (string_data))
+    (variable_end)))
+
+================================================================================
+Escape sequences, newlines
+================================================================================
+{{ 'begin \
+ sep \
+ end' }}
+--------------------------------------------------------------------------------
+
+(source_file
+  (jinja_variable
+    (variable_begin)
+    (string
+      (string_data)
+      (escape_sequence)
+      (string_data)
+      (escape_sequence)
+      (string_data))
+    (variable_end)))
+
+================================================================================
+Escape sequences, quotes
+================================================================================
+{{ 'begin \' \" end' }}
+{{ "begin \' \" end" }}
+--------------------------------------------------------------------------------
+
+(source_file
+  (jinja_variable
+    (variable_begin)
+    (string
+      (string_data)
+      (escape_sequence)
+      (string_data)
+      (escape_sequence)
+      (string_data))
+    (variable_end))
+  (template_data)
+  (jinja_variable
+    (variable_begin)
+    (string
+      (string_data)
+      (escape_sequence)
+      (string_data)
+      (escape_sequence)
+      (string_data))
+    (variable_end)))
+
+================================================================================
+Escape sequences, JUST quotes
+================================================================================
+{{ '\'' }}
+{{ "\"" }}
+{{ '''\'''' }}
+{{ """\"""" }}
+--------------------------------------------------------------------------------
+
+(source_file
+  (jinja_variable
+    (variable_begin)
+    (string
+      (escape_sequence))
+    (variable_end))
+  (template_data)
+  (jinja_variable
+    (variable_begin)
+    (string
+      (escape_sequence))
+    (variable_end))
+  (template_data)
+  (jinja_variable
+    (variable_begin)
+    (string
+      (escape_sequence))
+    (variable_end))
+  (template_data)
+  (jinja_variable
+    (variable_begin)
+    (string
+      (escape_sequence))
+    (variable_end)))
+
+================================================================================
+Escape sequences, control characters
+================================================================================
+{{ 'begin \a\b\f\n\r\t\v end' }}
+--------------------------------------------------------------------------------
+
+(source_file
+  (jinja_variable
+    (variable_begin)
+    (string
+      (string_data)
+      (escape_sequence)
+      (escape_sequence)
+      (escape_sequence)
+      (escape_sequence)
+      (escape_sequence)
+      (escape_sequence)
+      (escape_sequence)
+      (string_data))
+    (variable_end)))
+
+================================================================================
+Escape sequences, hex
+================================================================================
+{{ 'begin \x6B end' }}
+--------------------------------------------------------------------------------
+
+(source_file
+  (jinja_variable
+    (variable_begin)
+    (string
+      (string_data)
+      (escape_sequence)
+      (string_data))
+    (variable_end)))
+
+================================================================================
+Escape sequences, Unicode 16-bit
+================================================================================
+{{ 'begin \u0138 end' }}
+--------------------------------------------------------------------------------
+
+(source_file
+  (jinja_variable
+    (variable_begin)
+    (string
+      (string_data)
+      (escape_sequence)
+      (string_data))
+    (variable_end)))
+
+================================================================================
+Escape sequences, Unicode 32-bit
+================================================================================
+{{ 'begin \U0001F600 end' }}
+--------------------------------------------------------------------------------
+
+(source_file
+  (jinja_variable
+    (variable_begin)
+    (string
+      (string_data)
+      (escape_sequence)
+      (string_data))
+    (variable_end)))
+
+================================================================================
+Escape sequences, named Unicode character
+================================================================================
+{{ 'begin \N{Latin Small Letter A} end' }}
+--------------------------------------------------------------------------------
+
+(source_file
+  (jinja_variable
+    (variable_begin)
+    (string
+      (string_data)
+      (escape_sequence)
+      (string_data))
+    (variable_end)))

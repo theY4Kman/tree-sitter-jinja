@@ -1,0 +1,358 @@
+================================================================================
+Empty template
+================================================================================
+
+--------------------------------------------------------------------------------
+
+(source_file)
+
+================================================================================
+Static text
+================================================================================
+daterz
+--------------------------------------------------------------------------------
+
+(source_file
+  (template_data))
+
+================================================================================
+Static text (curly braces)
+================================================================================
+{}
+--------------------------------------------------------------------------------
+
+(source_file
+  (template_data))
+
+================================================================================
+String Jinja expr
+================================================================================
+{{ "daterz" }}
+--------------------------------------------------------------------------------
+
+(source_file
+  (jinja_variable
+    (variable_begin)
+    (string
+      (string_data))
+    (variable_end)))
+
+================================================================================
+String Jinja expr escape sequences
+================================================================================
+{{ "\"daterz\n\"" }}
+--------------------------------------------------------------------------------
+
+(source_file
+  (jinja_variable
+    (variable_begin)
+    (string
+      (escape_sequence)
+      (string_data)
+      (escape_sequence)
+      (escape_sequence))
+    (variable_end)))
+
+================================================================================
+String Jinja expr escape sequences (triple-double-quotes)
+================================================================================
+{{ """\"""\"daterz\n\"""" }}
+--------------------------------------------------------------------------------
+
+(source_file
+  (jinja_variable
+    (variable_begin)
+    (string
+      (escape_sequence)
+      (escape_sequence)
+      (string_data)
+      (escape_sequence)
+      (escape_sequence))
+    (variable_end)))
+
+================================================================================
+String Jinja expr (single-quotes)
+================================================================================
+{{ 'daterz' }}
+--------------------------------------------------------------------------------
+
+(source_file
+  (jinja_variable
+    (variable_begin)
+    (string
+      (string_data))
+    (variable_end)))
+
+================================================================================
+String Jinja expr escape sequences (single-quotes)
+================================================================================
+{{ '\'daterz\n\'' }}
+--------------------------------------------------------------------------------
+
+(source_file
+  (jinja_variable
+    (variable_begin)
+    (string
+      (escape_sequence)
+      (string_data)
+      (escape_sequence)
+      (escape_sequence))
+    (variable_end)))
+
+================================================================================
+String Jinja expr escape sequences (triple-single-quotes)
+================================================================================
+{{ '''\'''\'daterz\n\'''' }}
+--------------------------------------------------------------------------------
+
+(source_file
+  (jinja_variable
+    (variable_begin)
+    (string
+      (escape_sequence)
+      (escape_sequence)
+      (string_data)
+      (escape_sequence)
+      (escape_sequence))
+    (variable_end)))
+
+================================================================================
+Comment
+================================================================================
+{# metadaterz #}
+--------------------------------------------------------------------------------
+
+(source_file
+  (comment
+    (comment_begin)
+    (comment_end)))
+
+================================================================================
+Assignment ({% set %})
+================================================================================
+{% set daterz = "daterz" %}
+--------------------------------------------------------------------------------
+
+(source_file
+  (jinja_assign
+    (block_begin)
+    (tag_name)
+    (identifier)
+    (string
+      (string_data))
+    (block_end)))
+
+================================================================================
+Assignment block ({% set %}{% endset %})
+================================================================================
+{% set daterz %}
+daterz
+{% endset %}
+--------------------------------------------------------------------------------
+
+(source_file
+  (jinja_assign_block
+    (block_begin)
+    (tag_name)
+    (identifier)
+    (block_end)
+    (template_data)
+    (block_begin)
+    (tag_name)
+    (block_end)))
+
+================================================================================
+Expression statement ({% do %})
+================================================================================
+{% do lst.append(1) %}
+--------------------------------------------------------------------------------
+
+(source_file
+  (jinja_expr_stmt
+    (block_begin)
+    (tag_name)
+    (call
+      (attribute
+        (identifier)
+        (identifier))
+      (argument_list
+        (integer)))
+    (block_end)))
+
+================================================================================
+Macro definition ({% macro %}) — no args, no body
+================================================================================
+{% macro daterz() %}{% endmacro %}
+--------------------------------------------------------------------------------
+
+(source_file
+  (jinja_macro
+    (block_begin)
+    (tag_name)
+    (identifier)
+    (parameters)
+    (block_end)
+    (block_begin)
+    (tag_name)
+    (block_end)))
+
+================================================================================
+Macro definition ({% macro %}) — no args
+================================================================================
+{% macro daterz() %}
+i am macro
+{% endmacro %}
+--------------------------------------------------------------------------------
+
+(source_file
+  (jinja_macro
+    (block_begin)
+    (tag_name)
+    (identifier)
+    (parameters)
+    (block_end)
+    (template_data)
+    (block_begin)
+    (tag_name)
+    (block_end)))
+
+================================================================================
+Macro definition ({% macro %})
+================================================================================
+{% macro daterz(a, b, c='d', e=f) %}
+{{ a + b + c + e }}
+{% endmacro %}
+--------------------------------------------------------------------------------
+
+(source_file
+  (jinja_macro
+    (block_begin)
+    (tag_name)
+    name: (identifier)
+    parameters: (parameters
+      (identifier)
+      (identifier)
+      (default_parameter
+        name: (identifier)
+        value: (string
+          content: (string_data)))
+      (default_parameter
+        name: (identifier)
+        value: (identifier)))
+    (block_end)
+    body: (template_data)
+    body: (jinja_variable
+      (variable_begin)
+      (binary_operator
+        left: (binary_operator
+          left: (binary_operator
+            left: (identifier)
+            right: (identifier))
+          right: (identifier))
+        right: (identifier))
+      (variable_end))
+    body: (template_data)
+    (block_begin)
+    (tag_name)
+    (block_end)))
+
+================================================================================
+For loop ({% for %})
+================================================================================
+{% for i in lst %}
+{{ i }}
+{% endfor %}
+--------------------------------------------------------------------------------
+
+(source_file
+  (jinja_for
+    (block_begin)
+    (tag_name)
+    left: (identifier)
+    right: (identifier)
+    (block_end)
+    body: (template_data)
+    body: (jinja_variable
+      (variable_begin)
+      (identifier)
+      (variable_end))
+    body: (template_data)
+    (block_begin)
+    (tag_name)
+    (block_end)))
+
+================================================================================
+For loop ({% for %}) — multiple iterands
+================================================================================
+{% for i, j, k in lst %}
+{{ i + j + k }}
+{% endfor %}
+--------------------------------------------------------------------------------
+
+(source_file
+  (jinja_for
+    (block_begin)
+    (tag_name)
+    left: (pattern_list
+      (identifier)
+      (identifier)
+      (identifier))
+    right: (identifier)
+    (block_end)
+    body: (template_data)
+    body: (jinja_variable
+      (variable_begin)
+      (binary_operator
+        left: (binary_operator
+          left: (identifier)
+          right: (identifier))
+        right: (identifier))
+      (variable_end))
+    body: (template_data)
+    (block_begin)
+    (tag_name)
+    (block_end)))
+
+================================================================================
+For loop ({% for %}) — with else
+================================================================================
+{% for i in lst %}
+{{ i }}
+{% else %}
+Nothing to iterate
+{% endfor %}
+--------------------------------------------------------------------------------
+
+(source_file
+  (jinja_for
+    (block_begin)
+    (tag_name)
+    left: (identifier)
+    right: (identifier)
+    (block_end)
+    body: (template_data)
+    body: (jinja_variable
+      (variable_begin)
+      (identifier)
+      (variable_end))
+    body: (template_data)
+    else: (jinja_else_clause
+      (block_begin)
+      (tag_name)
+      (block_end)
+      body: (template_data))
+    (block_begin)
+    (tag_name)
+    (block_end)))
+
+================================================================================
+Unknown Jinja tag
+================================================================================
+{% i_am_unknown %}
+--------------------------------------------------------------------------------
+
+(source_file
+  (jinja_tag
+    (block_begin)
+    name: (identifier)
+    (block_end)))

@@ -2530,16 +2530,21 @@
   {
     "type": "string",
     "named": true,
-    "fields": {},
-    "children": {
-      "multiple": true,
-      "required": false,
-      "types": [
-        {
-          "type": "escape_sequence",
-          "named": true
-        }
-      ]
+    "fields": {
+      "content": {
+        "multiple": true,
+        "required": false,
+        "types": [
+          {
+            "type": "escape_sequence",
+            "named": true
+          },
+          {
+            "type": "string_data",
+            "named": true
+          }
+        ]
+      }
     }
   },
   {
@@ -2650,19 +2655,11 @@
     "named": false
   },
   {
-    "type": "\"",
-    "named": false
-  },
-  {
     "type": "%",
     "named": false
   },
   {
     "type": "&",
-    "named": false
-  },
-  {
-    "type": "'",
     "named": false
   },
   {
@@ -2856,6 +2853,10 @@
   {
     "type": "recursive",
     "named": false
+  },
+  {
+    "type": "string_data",
+    "named": true
   },
   {
     "type": "tag_name",

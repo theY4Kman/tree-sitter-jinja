@@ -3665,12 +3665,8 @@
                   "name": "string_data"
                 },
                 {
-                  "type": "PREC",
-                  "value": 1,
-                  "content": {
-                    "type": "SYMBOL",
-                    "name": "escape_sequence"
-                  }
+                  "type": "SYMBOL",
+                  "name": "escape_sequence"
                 }
               ]
             }
@@ -3685,8 +3681,12 @@
     "string_data": {
       "type": "IMMEDIATE_TOKEN",
       "content": {
-        "type": "PATTERN",
-        "value": "[^'\"]+"
+        "type": "PREC",
+        "value": 1,
+        "content": {
+          "type": "PATTERN",
+          "value": "[^'\"]+"
+        }
       }
     },
     "escape_sequence": {
@@ -3699,6 +3699,22 @@
           "value": "\\\\(u[a-fA-F\\d]{4}|U[a-fA-F\\d]{8}|\\d{3}|['\"abfrntv\\\\]|N\\{[^}]+})"
         }
       }
+    },
+    "concatenated_string": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "SYMBOL",
+          "name": "string"
+        },
+        {
+          "type": "REPEAT1",
+          "content": {
+            "type": "SYMBOL",
+            "name": "string"
+          }
+        }
+      ]
     },
     "conditional_expression": {
       "type": "PREC_RIGHT",
@@ -3728,22 +3744,6 @@
           }
         ]
       }
-    },
-    "concatenated_string": {
-      "type": "SEQ",
-      "members": [
-        {
-          "type": "SYMBOL",
-          "name": "string"
-        },
-        {
-          "type": "REPEAT1",
-          "content": {
-            "type": "SYMBOL",
-            "name": "string"
-          }
-        }
-      ]
     },
     "integer": {
       "type": "TOKEN",

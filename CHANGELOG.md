@@ -6,6 +6,9 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
+
+
+## [0.2.0] - 2025-02-16
 ### Added
 - Introduce `string_data` node to house only contents of string literals
 - `string` nodes now have a `content` field applied to all `string_data` and `escape_sequence` children comprising the string content.

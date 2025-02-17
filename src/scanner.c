@@ -10,6 +10,7 @@ enum TokenType {
 	VARIABLE_END,
 	COMMENT_BEGIN,
 	COMMENT_END,
+	RAW_BODY,
 	STRING_DELIMITER,
 	STRING_DATA,
 	ESCAPE_SEQUENCE,
@@ -28,6 +29,20 @@ static void eat_whitespace(TSLexer *lexer) {
             || lexer->lookahead == '\n'
         ) {
             skip(lexer);
+        } else {
+            break;
+        }
+    }
+}
+
+static void pass_whitespace(TSLexer *lexer) {
+    while (lexer->lookahead != '\0') {
+        if (lexer->lookahead == ' '
+            || lexer->lookahead == '\t'
+            || lexer->lookahead == '\r'
+            || lexer->lookahead == '\n'
+        ) {
+            advance(lexer);
         } else {
             break;
         }
@@ -71,6 +86,7 @@ bool tree_sitter_jinja_external_scanner_scan(void *payload, TSLexer *lexer, cons
         valid_symbols[VARIABLE_END] &&
         valid_symbols[COMMENT_BEGIN] &&
         valid_symbols[COMMENT_END] &&
+        valid_symbols[RAW_BODY] &&
         valid_symbols[STRING_DELIMITER] &&
         valid_symbols[STRING_DATA] &&
         valid_symbols[ESCAPE_SEQUENCE] &&
@@ -313,6 +329,45 @@ bool tree_sitter_jinja_external_scanner_scan(void *payload, TSLexer *lexer, cons
 
 		lexer->result_symbol = TEMPLATE_DATA;
 		return true;
+	}
+
+	if (valid_symbols[RAW_BODY]) {
+	    while (lexer->lookahead) {
+	        if (lexer->lookahead != '{') {
+                advance(lexer);
+                lexer->mark_end(lexer);
+            } else {
+                advance(lexer);
+                if (lexer->lookahead != '%') continue;
+                advance(lexer);
+                if (lexer->lookahead == '+' || lexer->lookahead == '-') {
+                    advance(lexer);
+                }
+                pass_whitespace(lexer);
+
+                if (lexer->lookahead != 'e') continue;
+                advance(lexer);
+                if (lexer->lookahead != 'n') continue;
+                advance(lexer);
+                if (lexer->lookahead != 'd') continue;
+                advance(lexer);
+                if (lexer->lookahead != 'r') continue;
+                advance(lexer);
+                if (lexer->lookahead != 'a') continue;
+                advance(lexer);
+                if (lexer->lookahead != 'w') continue;
+                advance(lexer);
+
+                pass_whitespace(lexer);
+                if (lexer->lookahead != '%') continue;
+                advance(lexer);
+                if (lexer->lookahead != '}') continue;
+                advance(lexer);
+
+                lexer->result_symbol = RAW_BODY;
+                return true;
+            }
+	    }
 	}
 
 	// Eat insignificant whitespace before dealing with Jinja delimiters

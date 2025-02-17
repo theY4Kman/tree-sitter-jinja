@@ -11,15 +11,14 @@ const PREC = {
   and: 11,
   not: 12,
   compare: 13,
-  bitwise_or: 14,
-  bitwise_and: 15,
-  xor: 16,
-  shift: 17,
-  plus: 18,
-  times: 19,
-  unary: 20,
-  power: 21,
-  call: 22,
+  bitwise_and: 14,
+  xor: 15,
+  shift: 16,
+  plus: 17,
+  times: 18,
+  unary: 19,
+  power: 20,
+  call: 21,
 };
 
 const binaryOpTable = [
@@ -32,8 +31,6 @@ const binaryOpTable = [
   [prec.left, '%', PREC.times],
   [prec.left, '//', PREC.times],
   [prec.right, '**', PREC.power],
-  // NB(zk): jinja2 uses | for filters
-  // [prec.left, '|', PREC.bitwise_or],
   [prec.left, '&', PREC.bitwise_and],
   [prec.left, '^', PREC.xor],
   [prec.left, '<<', PREC.shift],
@@ -46,7 +43,6 @@ module.exports = grammar({
   conflicts: $ => [
     [$.primary_expression, $.pattern],
     [$.primary_expression, $.list_splat_pattern],
-    [$.parameters, $.tuple],
     [$.tuple, $.tuple_pattern],
     [$.list, $.list_pattern],
     [$.missing_binary_operator, $.binary_operator],
@@ -66,16 +62,21 @@ module.exports = grammar({
     $.variable_end,
     $.comment_begin,
     $.comment_end,
+    $._jinja_raw_body,
     $._string_delimiter,
     $.string_data,
     $.escape_sequence,
     $.template_data,
   ],
 
+  word: $ => $.identifier,
+
   rules: {
     source_file: $ => optional($._body),
     _body: $ => repeat1($._statement),
     _statement: $ => choice(
+      $.jinja_raw,
+
       $.jinja_assign,
       $.jinja_assign_block,
       $.jinja_with,
@@ -109,6 +110,13 @@ module.exports = grammar({
       $.template_data,
       $.comment,
     ),
+
+    jinja_raw: $ => seq(
+      simpleTag($, 'raw'),
+      field('body', alias($._jinja_raw_body, $.template_data)),
+      simpleTag($, 'endraw'),
+    ),
+    _jinja_raw_body: $ => /.+/,
 
     jinja_assign: $ => seq(
       $.block_begin,

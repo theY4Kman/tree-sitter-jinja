@@ -15,6 +15,12 @@ jobs:
     with:
       generate: true
       attestations: true
+  npm:
+    uses: tree-sitter/workflows/.github/workflows/package-npm.yml@main
+    with:
+      generate: true
+    secrets:
+      NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
   pypi:
     uses: ./.github/workflows/package-pypi.yml
     with:

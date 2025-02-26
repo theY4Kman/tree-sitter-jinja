@@ -21,33 +21,25 @@ static inline void advance(TSLexer *lexer) { lexer->advance(lexer, false); }
 
 static inline void skip(TSLexer *lexer) { lexer->advance(lexer, true); }
 
-static void eat_whitespace(TSLexer *lexer) {
+static void advance_whitespace(TSLexer *lexer, bool include) {
+    void (*advance_func)(TSLexer *) = include ? advance : skip;
+
     while (lexer->lookahead != '\0') {
         if (lexer->lookahead == ' '
             || lexer->lookahead == '\t'
             || lexer->lookahead == '\r'
             || lexer->lookahead == '\n'
         ) {
-            skip(lexer);
+            advance_func(lexer);
         } else {
             break;
         }
     }
 }
 
-static void pass_whitespace(TSLexer *lexer) {
-    while (lexer->lookahead != '\0') {
-        if (lexer->lookahead == ' '
-            || lexer->lookahead == '\t'
-            || lexer->lookahead == '\r'
-            || lexer->lookahead == '\n'
-        ) {
-            advance(lexer);
-        } else {
-            break;
-        }
-    }
-}
+static inline void eat_whitespace(TSLexer *lexer) { advance_whitespace(lexer, false); }
+
+static inline void pass_whitespace(TSLexer *lexer) { advance_whitespace(lexer, true); }
 
 
 typedef struct {

@@ -256,7 +256,8 @@ module.exports = grammar({
 
     jinja_variable: $ => seq(
       $.variable_begin,
-      $.expression,
+      // Not optional at runtime, but allowed while parsing to avoid poor error recovery in tree-sitter
+      optional($.expression),
       $.variable_end,
     ),
 

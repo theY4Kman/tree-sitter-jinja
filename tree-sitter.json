@@ -16,7 +16,7 @@
     }
   ],
   "metadata": {
-    "version": "0.3.2",
+    "version": "0.3.3",
     "license": "MIT",
     "description": "Jinja2 grammar for the tree-sitter parsing library",
     "authors": [

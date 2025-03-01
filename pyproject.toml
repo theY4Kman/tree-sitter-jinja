@@ -5,7 +5,7 @@ build-backend = "setuptools.build_meta"
 [project]
 name = "tree-sitter-jinja"
 description = "Jinja2 grammar for the tree-sitter parsing library"
-version = "0.3.2"
+version = "0.3.3"
 keywords = ["incremental", "parsing", "tree-sitter", "jinja"]
 classifiers = [
   "Intended Audience :: Developers",

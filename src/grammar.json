@@ -4228,27 +4228,27 @@
     },
     "block_begin": {
       "type": "PATTERN",
-      "value": "\\{%-?"
+      "value": "\\{%[-+]?"
     },
     "block_end": {
       "type": "PATTERN",
-      "value": "-?%}"
+      "value": "[-+]?%}"
     },
     "variable_begin": {
       "type": "PATTERN",
-      "value": "\\{\\{-?"
+      "value": "\\{\\{[-+]?"
     },
     "variable_end": {
       "type": "PATTERN",
-      "value": "-?}}"
+      "value": "[-+]?}}"
     },
     "comment_begin": {
       "type": "PATTERN",
-      "value": "\\{#-?"
+      "value": "\\{#[-+]?"
     },
     "comment_end": {
       "type": "PATTERN",
-      "value": "-?#}"
+      "value": "[-+]?#}"
     },
     "_string_delimiter": {
       "type": "PATTERN",

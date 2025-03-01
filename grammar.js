@@ -684,12 +684,12 @@ module.exports = grammar({
 
     template_data: $ => /([^{}]+|\{[^%{#]|[%}#][^}])+/,
 
-    block_begin: $ => /\{%-?/,
-    block_end: $ => /-?%}/,
-    variable_begin: $ => /\{\{-?/,
-    variable_end: $ => /-?}}/,
-    comment_begin: $ => /\{#-?/,
-    comment_end: $ => /-?#}/,
+    block_begin: $ => /\{%[-+]?/,
+    block_end: $ => /[-+]?%}/,
+    variable_begin: $ => /\{\{[-+]?/,
+    variable_end: $ => /[-+]?}}/,
+    comment_begin: $ => /\{#[-+]?/,
+    comment_end: $ => /[-+]?#}/,
 
     _string_delimiter: $ => /'''|"""|'|"/,
   },
